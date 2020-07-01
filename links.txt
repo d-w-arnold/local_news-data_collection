@@ -1,0 +1,20 @@
+# BBC Regional news sites
+https://www.bbc.co.uk/news/england/kent
+https://www.bbc.co.uk/news/england/lincolnshire
+https://www.bbc.co.uk/news/england/shropshire
+#
+# Legacy local newspapers
+https://www.kentonline.co.uk/canterbury/
+https://www.cambridgeindependent.co.uk/
+https://www.bristolpost.co.uk/
+https://www.nottinghampost.com/
+https://www.thestar.co.uk/
+https://www.miltonkeynes.co.uk/
+#
+# Independent local news providers
+http://altrincham.today/
+https://onthewight.com/
+https://thelincolnite.co.uk/
+https://theisleofthanetnews.com/category/news/
+https://westbridgfordwire.com/
+https://www.yourthurrock.com/

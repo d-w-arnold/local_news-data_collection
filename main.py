@@ -1,5 +1,8 @@
+from links import get_links
+
+
 def main():
-    print("Main function")
+    get_links()
 
 
 if __name__ == '__main__':
