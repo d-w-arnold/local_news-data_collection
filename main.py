@@ -1,9 +1,11 @@
 from links import get_dict_of_links, read_list_of_links
+from pdfs import gen_pdfs
 
 
 def main():
-    dict_of_links = get_dict_of_links(read_list_of_links('links.txt'))
-    print()
+    list_of_links = read_list_of_links('links.txt')
+    dict_of_links = get_dict_of_links(list_of_links)
+    gen_pdfs(list_of_links, dict_of_links)
 
 
 if __name__ == '__main__':

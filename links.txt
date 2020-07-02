@@ -1,3 +1,6 @@
+# Use '#' at the beginning of a line to comment out that line,
+# Only lines WITHOUT a leading '#' will be read into the Python program.
+#
 # BBC Regional news sites
 https://www.bbc.co.uk/news/england/kent
 https://www.bbc.co.uk/news/england/lincolnshire
