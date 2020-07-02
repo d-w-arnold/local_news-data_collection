@@ -4,6 +4,7 @@ import re
 
 
 def read_list_of_links(path):
+    print("** Reading in URLs from: {} **".format(path))
     file1 = open(path, 'r')
     links = file1.readlines()
     tmp = list()
@@ -15,7 +16,6 @@ def read_list_of_links(path):
 
 
 def get_soup(url_proto_domain, html_page):
-    print("Domain is: {}".format(url_proto_domain))
     if url_proto_domain == 'https://www.bbc.co.uk':
         return BeautifulSoup(html_page, "html.parser").find("div", {"id": "site-container"}).findAll('a')
     elif url_proto_domain == 'https://www.kentonline.co.uk':
@@ -46,7 +46,8 @@ def get_soup(url_proto_domain, html_page):
         return BeautifulSoup(html_page, "html.parser").findAll('a')
 
 
-def get_dict_of_links(links):
+def gen_dict_of_links(links):
+    print("** Generating dictionary of URLs from list of URLs **")
     dict_of_links = dict()
     total_links = 0
     for x in links:
@@ -61,13 +62,11 @@ def get_dict_of_links(links):
                     links.append(url_path)
                 if re.search('^/', url_path) is not None:
                     links.append(url_proto_domain + url_path)
-            print("{0} - {1} links".format(x, len(links)))
-            print()
+            print("URL: {}".format(x))
+            print("- Number of Links found: {}".format(len(links)))
             dict_of_links[x] = links
             total_links += len(links)
         except Exception as e:
             print("** Exception ** : {0} - {1}".format(x, e))
-            print()
     print("** Total number of links ** : {}".format(total_links))
-    print()
     return dict_of_links
