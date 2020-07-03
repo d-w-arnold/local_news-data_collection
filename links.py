@@ -1,7 +1,7 @@
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
 import os
 import re
+from bs4 import BeautifulSoup
+from urllib.request import Request, urlopen
 
 
 def read_list_of_links(path):
@@ -77,11 +77,12 @@ def gen_dict_of_links(links, output_path):
 
 
 def output_dict_of_links_to_txt(dict_of_links, filename):
-    # create list of strings
-    list_of_strings = [f'{key} : {dict_of_links[key]}' for key in dict_of_links]
-    # write string one by one adding newline
+    list_of_strings = str()
+    for key in dict_of_links:
+        formatted_list = '\n'.join('{}: {}'.format(*k) for k in enumerate(dict_of_links[key]))
+        list_of_strings += '{0} :\n\n{1}\n\n'.format(key, formatted_list)
     file_path = os.path.join(os.getcwd(), filename)
     if os.path.isfile(file_path):
         os.unlink(file_path)
     with open(filename, 'w') as my_file:
-        [my_file.write(f'{st}\n') for st in list_of_strings]
+        my_file.write(list_of_strings)
