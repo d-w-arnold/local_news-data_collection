@@ -63,10 +63,12 @@ def gen_dict_of_links(links):
                 if re.search('^/', url_path) is not None:
                     links.append(url_proto_domain + url_path)
             print("URL: {}".format(x))
-            print("- Number of Links found: {}".format(len(links)))
+            print(" -- Number of Links found: {}".format(len(links)))
             dict_of_links[x] = links
             total_links += len(links)
         except Exception as e:
             print("** Exception ** : {0} - {1}".format(x, e))
+    print()
     print("** Total number of links ** : {}".format(total_links))
+    print()
     return dict_of_links
