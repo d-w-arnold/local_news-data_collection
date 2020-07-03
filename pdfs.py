@@ -1,7 +1,7 @@
 import os
 import re
-import shutil
 import subprocess
+from manage_dir import prepare_dir
 from urllib.parse import urljoin, urlparse
 
 
@@ -26,32 +26,10 @@ def gen_link_pdf(path_for_lnk_pdfs, link):
     return completed_process
 
 
-def del_dir_contents(path):
-    print("** Deleting files/directories in: {} **".format(path))
-    for filename in os.listdir(path):
-        file_path = os.path.join(path, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-            print("** Deleted file: {} **".format(file_path))
-        except Exception as e:
-            print("** Failed to delete ** : {0} - Reason: {1}".format(file_path, e))
-
-
-def prepare_pdfs_dir():
-    pdfs_path = os.path.join(os.getcwd(), "pdfs")
-    if os.path.isdir(pdfs_path):
-        del_dir_contents(pdfs_path)
-    else:
-        os.mkdir(pdfs_path)
-
-
 # TODO: Solve HTTP 403 errors for both gen_pdfs() and gen_only_home_pdfs()
 def gen_pdfs(lol, dol):
     print("** Generating PDFs using list of URLs and dictionary of URLs **")
-    prepare_pdfs_dir()
+    prepare_dir("pdfs")
     for lnk in lol:
         print("** Generating PDFs for: {} **".format(lnk))
         gen_master_pdf(lnk)
@@ -63,11 +41,13 @@ def gen_pdfs(lol, dol):
         for link in dol[lnk]:
             # TODO: Check if PDF already exists, if so give a name extension to the newest PDF being saved
             gen_link_pdf(path_for_lnk_pdfs, link)
+    print()
 
 
 def gen_only_home_pdfs(lol):
     print("** Generating home PDFs using list of URLs **")
-    prepare_pdfs_dir()
+    prepare_dir("pdfs")
     for lnk in lol:
         print("** Generating PDF for: {} **".format(lnk))
         gen_master_pdf(lnk)
+    print()

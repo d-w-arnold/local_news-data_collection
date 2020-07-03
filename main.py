@@ -3,9 +3,7 @@ from pdfs import gen_only_home_pdfs
 
 
 def print_finished():
-    print()
     print("** Finished **")
-    print()
 
 
 def main():
