@@ -40,13 +40,18 @@ def del_dir_contents(path):
             print("** Failed to delete ** : {0} - Reason: {1}".format(file_path, e))
 
 
-def gen_pdfs(lol, dol):
-    print("** Generating PDFs using list of URLs and dictionary of URLs **")
+def prepare_pdfs_dir():
     pdfs_path = os.path.join(os.getcwd(), "pdfs")
     if os.path.isdir(pdfs_path):
         del_dir_contents(pdfs_path)
     else:
         os.mkdir(pdfs_path)
+
+
+# TODO: Solve HTTP 403 errors for both gen_pdfs() and gen_only_home_pdfs()
+def gen_pdfs(lol, dol):
+    print("** Generating PDFs using list of URLs and dictionary of URLs **")
+    prepare_pdfs_dir()
     for lnk in lol:
         print("** Generating PDFs for: {} **".format(lnk))
         gen_master_pdf(lnk)
@@ -56,4 +61,13 @@ def gen_pdfs(lol, dol):
             os.mkdir(path_for_lnk_pdfs)
             print("** Created directory: {} **".format(path_for_lnk_pdfs))
         for link in dol[lnk]:
+            # TODO: Check if PDF already exists, if so give a name extension to the newest PDF being saved
             gen_link_pdf(path_for_lnk_pdfs, link)
+
+
+def gen_only_home_pdfs(lol):
+    print("** Generating home PDFs using list of URLs **")
+    prepare_pdfs_dir()
+    for lnk in lol:
+        print("** Generating PDF for: {} **".format(lnk))
+        gen_master_pdf(lnk)

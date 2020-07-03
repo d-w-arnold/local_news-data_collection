@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+import os
 import re
 
 
@@ -46,7 +47,7 @@ def get_soup(url_proto_domain, html_page):
         return BeautifulSoup(html_page, "html.parser").findAll('a')
 
 
-def gen_dict_of_links(links):
+def gen_dict_of_links(links, output_path):
     print("** Generating dictionary of URLs from list of URLs **")
     dict_of_links = dict()
     total_links = 0
@@ -68,7 +69,19 @@ def gen_dict_of_links(links):
             total_links += len(links)
         except Exception as e:
             print("** Exception ** : {0} - {1}".format(x, e))
+    output_dict_of_links_to_txt(dict_of_links, output_path)
     print()
     print("** Total number of links ** : {}".format(total_links))
     print()
     return dict_of_links
+
+
+def output_dict_of_links_to_txt(dict_of_links, filename):
+    # create list of strings
+    list_of_strings = [f'{key} : {dict_of_links[key]}' for key in dict_of_links]
+    # write string one by one adding newline
+    file_path = os.path.join(os.getcwd(), filename)
+    if os.path.isfile(file_path):
+        os.unlink(file_path)
+    with open(filename, 'w') as my_file:
+        [my_file.write(f'{st}\n') for st in list_of_strings]
