@@ -10,7 +10,7 @@ def print_finished():
 
 def main():
     list_of_links = read_list_of_links('links.txt')
-    dict_of_links = gen_dict_of_links(list_of_links, 'dictionary_of_links.txt')
+    dict_of_links = gen_dict_of_links(list_of_links)
     gen_only_home_pdfs(list_of_links)
     print_finished()
 

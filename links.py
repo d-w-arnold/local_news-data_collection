@@ -1,6 +1,7 @@
 import os
 import re
 from bs4 import BeautifulSoup
+from pdfs import del_dir_contents
 from urllib.request import Request, urlopen
 
 
@@ -47,7 +48,7 @@ def get_soup(url_proto_domain, html_page):
         return BeautifulSoup(html_page, "html.parser").findAll('a')
 
 
-def gen_dict_of_links(links, output_path):
+def gen_dict_of_links(links):
     print("** Generating dictionary of URLs from list of URLs **")
     dict_of_links = dict()
     total_links = 0
@@ -69,20 +70,27 @@ def gen_dict_of_links(links, output_path):
             total_links += len(links)
         except Exception as e:
             print("** Exception ** : {0} - {1}".format(x, e))
-    output_dict_of_links_to_txt(dict_of_links, output_path)
+    output_dict_of_links_to_txt(dict_of_links)
     print()
     print("** Total number of links ** : {}".format(total_links))
     print()
     return dict_of_links
 
 
-def output_dict_of_links_to_txt(dict_of_links, filename):
-    list_of_strings = str()
+def prepare_directory_of_links_dir():
+    pdfs_path = os.path.join(os.getcwd(), "directory_of_links")
+    if os.path.isdir(pdfs_path):
+        del_dir_contents(pdfs_path)
+    else:
+        os.mkdir(pdfs_path)
+
+
+def output_dict_of_links_to_txt(dict_of_links):
+    prepare_directory_of_links_dir()
     for key in dict_of_links:
         formatted_list = '\n'.join('{}: {}'.format(*k) for k in enumerate(dict_of_links[key]))
-        list_of_strings += '{0} :\n\n{1}\n\n'.format(key, formatted_list)
-    file_path = os.path.join(os.getcwd(), filename)
-    if os.path.isfile(file_path):
-        os.unlink(file_path)
-    with open(filename, 'w') as my_file:
-        my_file.write(list_of_strings)
+        list_of_strings = '{0} :\n\n{1}\n'.format(key, formatted_list)
+        file_path = os.path.join(os.getcwd(), "directory_of_links",
+                                 str("<" + str(key).replace("://", "_").replace("/", "_") + ">.txt"))
+        with open(file_path, 'w') as my_file:
+            my_file.write(list_of_strings)
