@@ -17,6 +17,7 @@ def read_list_of_links(path):
     return tmp
 
 
+# TODO: Make it so site container info can be specified in links.txt along with URL for crawling
 def get_soup(url_proto_domain, html_page):
     if url_proto_domain == 'https://www.bbc.co.uk':
         return BeautifulSoup(html_page, "html.parser").find("div", {"id": "site-container"}).findAll('a')
@@ -48,7 +49,7 @@ def get_soup(url_proto_domain, html_page):
         return BeautifulSoup(html_page, "html.parser").findAll('a')
 
 
-def gen_dict_of_links(links):
+def gen_dict_of_links(links, output_dir_name):
     print("** Generating dictionary of URLs from list of URLs **")
     dict_of_links = dict()
     total_links = 0
@@ -73,17 +74,17 @@ def gen_dict_of_links(links):
     print()
     print("** Total number of links ** : {}".format(total_links))
     print()
-    output_dict_of_links_to_txt(dict_of_links)
+    output_dict_of_links_to_txt(dict_of_links, output_dir_name)
     return dict_of_links
 
 
-def output_dict_of_links_to_txt(dict_of_links):
+def output_dict_of_links_to_txt(dict_of_links, output_dir_name):
     print("** Generating TXTs using dictionary of URLs **")
-    prepare_dir("directory_of_links")
+    prepare_dir(output_dir_name)
     for key in dict_of_links:
         formatted_list = '\n'.join('{}: {}'.format(*k) for k in enumerate(dict_of_links[key]))
         list_of_strings = '{0} :\n\n{1}\n'.format(key, formatted_list)
-        file_path = os.path.join(os.getcwd(), "directory_of_links",
+        file_path = os.path.join(os.getcwd(), output_dir_name,
                                  str("<" + str(key).replace("://", "_").replace("/", "_") + ">.txt"))
         with open(file_path, 'w') as my_file:
             print("** Generating TXT for: {} **".format(key))

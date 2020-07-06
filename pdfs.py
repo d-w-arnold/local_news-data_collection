@@ -27,9 +27,9 @@ def gen_link_pdf(path_for_lnk_pdfs, link):
 
 
 # TODO: Solve HTTP 403 errors for both gen_pdfs() and gen_only_home_pdfs()
-def gen_pdfs(lol, dol):
+def gen_pdfs(lol, dol, output_dir_name):
     print("** Generating PDFs using list of URLs and dictionary of URLs **")
-    prepare_dir("pdfs")
+    prepare_dir(output_dir_name)
     for lnk in lol:
         print("** Generating PDFs for: {} **".format(lnk))
         gen_master_pdf(lnk)
@@ -44,9 +44,9 @@ def gen_pdfs(lol, dol):
     print()
 
 
-def gen_only_home_pdfs(lol):
+def gen_only_home_pdfs(lol, output_dir_name):
     print("** Generating home PDFs using list of URLs **")
-    prepare_dir("pdfs")
+    prepare_dir(output_dir_name)
     for lnk in lol:
         print("** Generating PDF for: {} **".format(lnk))
         gen_master_pdf(lnk)
