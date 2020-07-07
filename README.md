@@ -12,3 +12,4 @@ pip3 install requests
 python3 main.py
 ```
 
+Generated PDFs can be found in `/pdfs` and generated TXTs can be found in `/directory_of_links`. Any PDFs and TXTs in these directories will be deleted on successive runs of the Python program.
