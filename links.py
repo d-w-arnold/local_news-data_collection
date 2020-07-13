@@ -11,7 +11,7 @@ def read_list_of_links(path):
     links = file1.readlines()
     tmp = list()
     for x in links:
-        # Use '#' at the beginning of a line for line comment in links.txt
+        # Use '#' at the beginning of a line for a line comment in input txt file
         if re.search('^#', x) is None:
             tmp.append(x.rstrip("\n"))
     return tmp
